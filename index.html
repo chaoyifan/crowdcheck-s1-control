@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="众包式AI内容核查互动式仿真平台实验">
+  <meta name="robots" content="noindex,nofollow">
+  <title>内容创作与发布实验</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body data-default-study="1">
+  <header class="topbar">
+    <a class="brand" href="#" aria-label="返回首页">
+      <span class="brand-mark" aria-hidden="true">光</span>
+      <span>微光社区</span>
+    </a>
+    <label class="top-search" aria-label="搜索">
+      <span aria-hidden="true">⌕</span>
+      <input type="search" placeholder="搜索感兴趣的内容" disabled>
+    </label>
+    <nav class="top-actions" aria-label="主导航">
+      <button type="button" aria-label="首页">首页</button>
+      <button type="button" aria-label="发现">发现</button>
+      <button type="button" aria-label="消息">消息</button>
+      <span class="avatar small" aria-hidden="true">创</span>
+    </nav>
+  </header>
+
+  <div class="shell">
+    <aside class="left-rail" aria-label="社区导航">
+      <strong>首页</strong>
+      <a class="active" href="#">全部动态</a>
+      <a href="#">关注</a>
+      <a href="#">收藏</a>
+      <a href="#">创作中心</a>
+      <div class="rail-note">学术研究模拟界面<br>不隶属于任何真实平台</div>
+    </aside>
+
+    <main class="main-column">
+      <section id="intro-screen" class="panel screen active" aria-labelledby="intro-title">
+        <div class="step-kicker">内容创作实验</div>
+        <h1 id="intro-title">请完成一次社交媒体内容发布</h1>
+        <p>你将使用网站内置的实验AI助手生成一段文案，可以自由修改，然后像平时一样完成发布设置。</p>
+        <div class="notice-box">
+          <strong>隐私提示</strong>
+          <p>请勿在提示词或文案中输入本人或他人的姓名、联系方式、住址、账号等个人信息。</p>
+        </div>
+        <label class="consent-row">
+          <input id="consent" type="checkbox">
+          <span>我已阅读说明，并确认自己年满18岁且过去三个月有社交媒体内容发布经验。</span>
+        </label>
+        <button id="start-btn" class="primary-btn" type="button" disabled>开始创作</button>
+      </section>
+
+      <section id="create-screen" class="screen" aria-labelledby="create-title">
+        <div class="progress" aria-label="实验进度"><span style="width:25%"></span></div>
+        <div class="panel">
+          <div class="step-kicker">步骤 1 / 4 · AI创作</div>
+          <h1 id="create-title">使用AI助手生成文案</h1>
+          <p id="topic-instruction" class="topic-instruction"></p>
+          <label class="field-label" for="prompt-input">给AI助手的提示词</label>
+          <textarea id="prompt-input" rows="4" maxlength="500" placeholder="例如：写一段轻松、实用的分享，包含三个具体建议。"></textarea>
+          <div class="field-meta"><span>请勿输入个人信息</span><span id="prompt-count">0 / 500</span></div>
+          <button id="generate-btn" class="ai-btn" type="button"><span aria-hidden="true">✦</span> 生成文案</button>
+          <div id="ai-working" class="ai-working" hidden aria-live="polite"><span></span><span></span><span></span> AI助手正在整理文案</div>
+        </div>
+
+        <div id="draft-panel" class="panel" hidden>
+          <div class="panel-heading">
+            <div><div class="step-kicker">AI生成结果</div><h2>修改并确认文案</h2></div>
+            <span class="ai-badge">AI生成</span>
+          </div>
+          <label class="field-label" for="draft-input">最终发布文案</label>
+          <textarea id="draft-input" rows="9" maxlength="1500"></textarea>
+          <div class="field-meta"><span>你可以自由增删和改写</span><span id="draft-count">0 / 1500</span></div>
+          <button id="to-publish-btn" class="primary-btn" type="button">进入发布页面</button>
+        </div>
+      </section>
+
+      <section id="publish-screen" class="screen" aria-labelledby="publish-title">
+        <div class="progress" aria-label="实验进度"><span style="width:45%"></span></div>
+        <div class="panel">
+          <div class="step-kicker">步骤 2 / 4 · 发布设置</div>
+          <h1 id="publish-title">发布动态</h1>
+          <div class="composer"><div class="avatar" aria-hidden="true">创</div><textarea id="publish-text" rows="8" maxlength="1500" aria-label="待发布文案"></textarea></div>
+          <div class="publish-settings">
+            <label><input type="checkbox" checked disabled> 允许评论</label>
+            <label><input type="checkbox" checked disabled> 公开可见</label>
+            <label class="ai-disclosure-option"><input id="initial-disclosure" type="checkbox"><span><strong>添加AI内容生成声明</strong><small>发布后将在动态上显示“内容使用AI生成”</small></span></label>
+          </div>
+          <div class="publish-footer"><span>该选项当前默认关闭，请根据自己的真实选择决定是否勾选。</span><button id="publish-btn" class="primary-btn" type="button">发布</button></div>
+        </div>
+      </section>
+
+      <section id="post-screen" class="screen" aria-labelledby="post-title">
+        <div class="progress" aria-label="实验进度"><span style="width:65%"></span></div>
+        <div class="panel post-panel">
+          <div class="post-author"><div class="avatar" aria-hidden="true">创</div><div><strong>社区创作者</strong><div class="muted">刚刚 · 来自网页端</div></div><button type="button" class="icon-btn" aria-label="更多操作">•••</button></div>
+          <p id="published-content" class="post-content"></p>
+          <div id="ai-label" class="content-label" hidden>内容使用AI生成</div>
+          <aside id="community-note" class="community-note" hidden aria-label="公开社区附注">
+            <div class="note-heading"><span class="note-icon" aria-hidden="true">✓</span><strong>社区附注 · 公开</strong></div>
+            <p>社区贡献者认为：该帖的文案在创作过程中使用了生成式AI，但发布者尚未添加AI内容声明。</p>
+            <p>来自不同观点群体的贡献者已将这条附注评为“有帮助”。</p>
+            <div id="note-metadata" class="note-metadata" hidden></div>
+            <div id="note-repaired" class="note-repaired" hidden>作者已补充AI内容声明。</div>
+          </aside>
+          <div class="post-stats"><span>转发 12</span><span>评论 28</span><span>赞 106</span></div>
+        </div>
+        <div id="initial-discloser-exit" class="panel exit-panel" hidden><div class="success-icon" aria-hidden="true">✓</div><h2>发布完成</h2><p>你在首次发布时主动添加了AI内容声明。本次体验到此结束，感谢参与。</p><button id="initial-finish-btn" class="primary-btn" type="button">完成</button></div>
+        <div id="continue-panel" class="panel" hidden><h2 id="post-title">请查看刚刚发布的动态</h2><p>确认页面信息后，继续回答几个与此次发布体验有关的问题。</p><button id="to-survey-btn" class="primary-btn" type="button">继续</button></div>
+      </section>
+
+      <section id="survey-screen" class="screen" aria-labelledby="survey-title">
+        <div class="progress" aria-label="实验进度"><span style="width:85%"></span></div>
+        <form id="survey-form" class="panel survey-card">
+          <div class="step-kicker">步骤 3 / 4 · 发布体验</div><h1 id="survey-title">请根据真实想法作答</h1><p class="muted">除特别说明外，1表示“非常不同意”，7表示“非常同意”。</p>
+          <fieldset><legend>未来主动披露意愿</legend><div id="intention-items"></div></fieldset>
+          <fieldset id="reputation-fieldset"><legend>此次决定中的想法</legend><div id="reputation-items"></div></fieldset>
+          <fieldset><legend>现在你希望如何处理这条动态？</legend><label class="choice-card"><input type="radio" name="correction" value="add" required> 现在补充AI内容声明</label><label class="choice-card"><input type="radio" name="correction" value="keep"> 暂不补充</label></fieldset>
+          <button class="primary-btn" type="submit">确认选择并继续</button>
+        </form>
+      </section>
+
+      <section id="checks-screen" class="screen" aria-labelledby="checks-title">
+        <div class="progress" aria-label="实验进度"><span style="width:95%"></span></div>
+        <form id="checks-form" class="panel survey-card">
+          <div class="step-kicker">步骤 4 / 4 · 最后几个问题</div><h1 id="checks-title">对页面信息的理解</h1><div id="manipulation-items"></div>
+          <fieldset><legend>你在过去三个月发布社交媒体内容的频率是？</legend><select name="posting_frequency" required><option value="">请选择</option><option value="less_monthly">少于每月1次</option><option value="monthly">每月1—3次</option><option value="weekly">每周1—3次</option><option value="frequent">每周4次及以上</option></select></fieldset>
+          <fieldset><legend>注意力检测：为确认你认真阅读，请选择“比较同意”。</legend><select name="attention_check" required><option value="">请选择</option><option value="1">非常不同意</option><option value="2">不同意</option><option value="3">比较不同意</option><option value="4">不确定</option><option value="5">比较同意</option><option value="6">同意</option><option value="7">非常同意</option></select></fieldset>
+          <button class="primary-btn" type="submit">提交并完成</button>
+        </form>
+      </section>
+
+      <section id="complete-screen" class="panel screen" aria-labelledby="complete-title"><div class="success-icon" aria-hidden="true">✓</div><h1 id="complete-title">感谢完成本次实验</h1><p>你的作答已在本设备生成实验记录。若本页面嵌入问卷系统，记录会同步返回问卷页面。</p><p id="completion-code" class="completion-code"></p><button id="return-btn" class="primary-btn" type="button" hidden>返回问卷</button></section>
+    </main>
+
+    <aside class="right-rail">
+      <section class="trend-card"><h2>社区热议</h2><ol><li><span>城市生活新方式</span><small>28.4万</small></li><li><span>提高学习效率</span><small>17.2万</small></li><li><span>周末去哪儿</span><small>13.8万</small></li><li><span>让生活更有条理</span><small>9.6万</small></li></ol></section>
+      <section class="study-card"><strong>研究说明</strong><p>这是去品牌化的学术研究模拟平台。页面中的用户、互动量与社区附注均为虚构材料。</p></section>
+    </aside>
+  </div>
+
+  <aside id="debug-panel" class="debug-panel" hidden><strong>研究者调试</strong><label>Study<select id="debug-study"><option value="1">Study 1</option><option value="2">Study 2</option><option value="3">Study 3</option><option value="4">Study 4</option></select></label><div id="debug-condition"></div></aside>
+  <script src="script.js"></script>
+</body>
+</html>
